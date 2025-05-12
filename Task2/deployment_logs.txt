@@ -1,0 +1,36 @@
+Name:                   scaletestapp
+Namespace:              default
+CreationTimestamp:      Mon, 12 May 2025 18:48:05 +0300
+Labels:                 <none>
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=scaletestapp
+Replicas:               2 desired | 2 updated | 2 total | 1 available | 1 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=scaletestapp
+  Containers:
+   scaletestapp:
+    Image:      shestera/scaletestapp
+    Port:       8080/TCP
+    Host Port:  0/TCP
+    Limits:
+      memory:      30Mi
+    Environment:   <none>
+    Mounts:        <none>
+  Volumes:         <none>
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Progressing    True    NewReplicaSetAvailable
+  Available      False   MinimumReplicasUnavailable
+OldReplicaSets:  <none>
+NewReplicaSet:   scaletestapp-5b49ff6fb9 (2/2 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  51m   deployment-controller  Scaled up replica set scaletestapp-5b49ff6fb9 from 0 to 1
+  Normal  ScalingReplicaSet  70s   deployment-controller  Scaled up replica set scaletestapp-5b49ff6fb9 from 1 to 2

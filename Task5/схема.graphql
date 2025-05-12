@@ -1,0 +1,95 @@
+type Client {
+  """Уникальный идентификатор клиента"""
+  id: ID!
+  """Полное имя клиента"""
+  name: String
+  """Возраст клиента"""
+  age: Int
+  """Список документов клиента"""
+  documents: [Document]
+  """Список родственников клиента"""
+  relatives: [Relative]
+}
+
+type Document {
+  """Уникальный идентификатор документа"""
+  id: ID!
+  """Тип документа"""
+  type: String
+  """Номер документа"""
+  number: String
+  """Дата выдачи документа (ISO формат)"""
+  issueDate: String
+  """Дата окончания действия документа (ISO формат)"""
+  expiryDate: String
+}
+
+type Relative {
+  """Уникальный идентификатор родственника"""
+  id: ID!
+  """Тип родственной связи"""
+  relationType: String
+  """Имя родственника"""
+  name: String
+  """Возраст родственника"""
+  age: Int
+}
+
+type Query {
+  client(id: ID!): Client
+  clientWithDocuments(id: ID!): Client
+  clientWithRelatives(id: ID!): Client
+  clientFullData(id: ID!): Client
+}
+
+# Получить только основную информацию
+query getClientBasic($id: ID!) {
+  client(id: $id) {
+    id
+    name
+    age
+  }
+}
+
+# Получить клиента с документами
+query getClientWithDocs($id: ID!) {
+  clientWithDocuments(id: $id) {
+    id
+    name
+    documents {
+      type
+      number
+    }
+  }
+}
+
+# Получить клиента с данными о родственниках
+query clientWithRelatives($id: ID!) {
+  clientWithRelatives(id: $id) {
+    id
+    name
+    age
+    relatives {
+      name
+      relationType
+    }
+  }
+}
+
+# Получить полные данные (по необходимости)
+query getClientFull($id: ID!) {
+  clientFullData(id: $id) {
+    id
+    name
+    age
+    documents {
+      type
+      number
+      issueDate
+    }
+    relatives {
+      name
+      relationType
+    }
+  }
+}
